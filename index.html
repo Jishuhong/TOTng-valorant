@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToTng - 无畏契约找队友</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #ff4655;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(255, 70, 85, 0.5);
+        }
+
+        .nickname {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ff4655;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .player-id {
+            font-size: 1.2em;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #4caf50;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .meme-banner {
+            background: linear-gradient(90deg, #ff4655, #ff6b6b);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.3em;
+            animation: slideInUp 0.8s ease;
+        }
+
+        .meme-banner .highlight {
+            color: #ffeaa7;
+            font-weight: bold;
+        }
+
+        .stats-section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .stats-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #ff4655;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 70, 85, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 70, 85, 0.3);
+        }
+
+        .stat-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .fun-facts {
+            background: rgba(255, 70, 85, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .fun-facts h3 {
+            color: #ff4655;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .fact-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 70, 85, 0.2);
+        }
+
+        .fact-item:last-child {
+            border-bottom: none;
+        }
+
+        .find-partners {
+            background: linear-gradient(135deg, rgba(255, 70, 85, 0.2), rgba(255, 107, 107, 0.2));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            animation: zoomIn 0.8s ease;
+        }
+
+        .find-partners h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ff4655;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff4655, #ff6b6b);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 70, 85, 0.5);
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 1.1em;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .rolling-dice {
+            font-size: 3em;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .rolling-dice:hover {
+            transform: rotate(360deg);
+        }
+
+        .result-text {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #ff4655;
+            min-height: 40px;
+        }
+
+        /* 爱心特效 */
+        .heart {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #ff4655;
+            transform: rotate(45deg);
+            pointer-events: none;
+            animation: float-up 1s ease-out forwards;
+            z-index: 9999;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff4655;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            left: -10px;
+        }
+
+        .heart::after {
+            top: -10px;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: rotate(45deg) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) scale(1.2) translateY(-100px);
+            }
+        }
+
+        /* 大图查看模式 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 70, 85, 0.5);
+        }
+    </style>
+</head>
+<body onmousedown="createHeart(event)">
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="avatar.jpg" alt="ToTng 头像" class="avatar">
+            <h1 class="nickname">ToTng</h1>
+            <p class="player-id"><span class="status-dot"></span>ID: 021467903</p>
+        </div>
+
+        <!-- Meme Banner -->
+        <div class="meme-banner">
+            <p><span class="highlight">抗渗开播了！真的假的？</span></p>
+            <p style="font-size: 0.8em; margin-top: 10px;">我靠真的开播了，赶紧上号！</p>
+        </div>
+
+        <!-- Fun Facts -->
+        <div class="fun-facts">
+            <h3>🎮 关于 ToTng</h3>
+            <div class="fact-item">
+                <strong>胜率:</strong> 62.2%（这胜率，鼠鼠变凤凰了属于是）
+            </div>
+            <div class="fact-item">
+                <strong>KDA:</strong> 1.38（不是盖的，真·带飞位）
+            </div>
+            <div class="fact-item">
+                <strong>ACS:</strong> 197（输出拉满，对面破防了）
+            </div>
+            <div class="fact-item">
+                <strong>总场次:</strong> 90 局（九十分，老六一个）
+            </div>
+            <div class="fact-item">
+                <strong>精准击败:</strong> 22.7%（枪法在线，白给王看了流泪）
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2 class="stats-title">📊 能力数据展示</h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 20px;">点击卡片可放大查看 ~ 💕</p>
+
+            <!-- 第一张：战斗数据 -->
+            <div class="stat-card" onclick="openLightbox('stats1.jpg')" style="max-width: 500px; margin: 0 auto 20px;">
+                <img src="stats1.jpg" alt="战斗数据">
+            </div>
+
+            <!-- 第二张：战斗数据 3 -->
+            <div class="stat-card" onclick="openLightbox('stats2.jpg')" style="max-width: 500px; margin: 0 auto;">
+                <img src="stats2.jpg" alt="战斗数据 2">
+            </div>
+        </div>
+
+        <!-- Find Partners Section -->
+        <div class="find-partners">
+            <h2>🚀 一起来瓦吧！</h2>
+            <p>缺人上分吗？ToTng 带你飞！（大概）</p>
+            <p style="margin-top: 15px; color: #bbb;">别单排啦，单排狗看了都摇头</p>
+
+            <div class="rolling-dice" onclick="rollDice()">🎲</div>
+            <div class="result-text" id="result"></div>
+
+            <button class="cta-button" onclick="copyID()">一键复制 ID</button>
+
+            <div class="contact-info">
+                <p><strong>无畏契约 ID:</strong> 021467903</p>
+                <p style="color: #999; font-size: 0.9em; margin-top: 10px;">添加好友备注：看网页来的（不然不加）</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with 💕 for ToTng</p>
+            <p style="margin-top: 10px; font-size: 0.8em;">温馨提示：玩游戏请适度，别熬夜肝了</p>
+        </div>
+
+        <!-- Lightbox for viewing images -->
+        <div class="lightbox" onclick="closeLightbox()">
+            <img id="lightbox-img" src="" alt="放大查看">
+        </div>
+    </div>
+
+    <script>
+        const memes = [
+            "抗渗开播了！速来上号！",
+            "真的假的？这都能赢？",
+            "我靠真的开播了，赶紧冲！",
+            "这把算我 C，下把继续白给",
+            "队友呢？队友去哪了？",
+            "这波操作，我自己都笑了",
+            "别问，问就是拉闸",
+            "稳如老狗，这把必赢",
+            "四包一？不存在的",
+            "残局 1v5，寄！"
+        ];
+
+        function rollDice() {
+            const dice = document.querySelector('.rolling-dice');
+            const result = document.getElementById('result');
+
+            dice.style.transform = 'rotate(720deg)';
+
+            setTimeout(() => {
+                const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+                result.textContent = randomMeme;
+                dice.style.transform = 'rotate(0deg)';
+            }, 500);
+        }
+
+        function copyID() {
+            navigator.clipboard.writeText('021467903').then(() => {
+                alert('ID 已复制！快去添加好友吧~');
+            }).catch(err => {
+                prompt('请手动复制 ID:', '021467903');
+            });
+        }
+
+        // Random meme on page load
+        window.onload = function() {
+            const banner = document.querySelector('.meme-banner p:first-child');
+            const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+            banner.innerHTML = `<span class="highlight">${randomMeme}</span>`;
+        };
+
+        // 点击产生爱心特效
+        function createHeart(e) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            // 随机颜色
+            const colors = ['#ff4655', '#ff6b6b', '#ffa07a', '#ffb6c1', '#ff1493'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            heart.style.background = color;
+            heart.style.setProperty('--tw-heart', color);
+
+            document.body.appendChild(heart);
+
+            // 修改伪元素颜色
+            const style = document.createElement('style');
+            style.textContent = `
+                .heart::before, .heart::after { background: ${color}; }
+            `;
+            heart.appendChild(style);
+
+            setTimeout(() => {
+                heart.remove();
+                if (style) style.remove();
+            }, 1000);
+        }
+
+        // 图片放大查看
+        function openLightbox(src) {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.querySelector('.lightbox');
+            lightbox.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
